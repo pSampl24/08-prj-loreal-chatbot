@@ -10,9 +10,17 @@ chatWindow.textContent = "👋 Hello! How can I help you today?";
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // When using Cloudflare, you'll need to POST a `messages` array in the body,
-  // and handle the response using: data.choices[0].message.content
+  // Get what the user typed
+  const userMessage = userInput.value.trim();
 
-  // Show message
-  chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
+  // Don't allow empty messages
+  if (userMessage === "") {
+    return;
+  }
+
+  // Display the user's question
+  chatWindow.textContent = `You asked: ${userMessage}`;
+
+  // Clear the input box
+  userInput.value = "";
 });
