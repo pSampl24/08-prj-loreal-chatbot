@@ -3,42 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Assistant</title>
+
+    <title>L'Oréal Beauty Assistant</title>
+
+    <!-- Material icon used for the send button -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
+    <!-- Montserrat font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="page-wrapper">
-      <!------- Header / Branding ------->
+      <!-- Header / Branding -->
       <header class="site-header">
-        <h1 class="site-title">Smart Product Advisor</h1>
+        <img
+          src="img/loreal-logo.png"
+          alt="L'Oréal logo"
+          class="brand-logo"
+        />
+
+        <h1 class="site-title">L'Oréal Beauty Assistant</h1>
+
+        <p class="site-subtitle">
+          Discover products, routines, and personalized beauty recommendations.
+        </p>
       </header>
 
-      <!------- Chat Area ------->
+      <!-- Chat Area -->
       <main>
         <section class="chatbox">
           <div id="chatWindow" class="chat-window">
-            <!-- messages will be appended here via JS -->
+            <!-- JavaScript displays messages here -->
           </div>
 
           <form id="chatForm" class="chat-form">
-            <label for="userInput" class="visually-hidden">Message</label>
+            <label for="userInput" class="visually-hidden">
+              Enter your message
+            </label>
+
             <input
               id="userInput"
               name="userInput"
               type="text"
-              placeholder="Ask me about products or routines…"
+              placeholder="Ask me about products or routines..."
               autocomplete="off"
               required
             />
+
             <button type="submit" id="sendBtn">
               <span class="material-icons">send</span>
               <span class="visually-hidden">Send</span>
@@ -47,11 +67,13 @@
         </section>
       </main>
 
-      <!------- Footer Links ------->
+      <!-- Footer -->
       <footer class="site-footer">
-        <p>&copy; 2025 Company Name. All rights reserved.</p>
+        <p>
+          &copy; 2026 L'Oréal Beauty Assistant. Educational Project.
+        </p>
+
         <nav>
-          <!-- These URLs are placeholders -->
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Use</a>
           <a href="#">Contact</a>

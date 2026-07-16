@@ -3,16 +3,63 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-// Set initial message
-chatWindow.textContent = "👋 Hello! How can I help you today?";
+/* Instructions that control the chatbot */
+const systemPrompt = `
+You are a helpful L'Oréal Beauty Assistant.
 
-/* Handle form submit */
-chatForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+Only answer questions about:
+- L'Oréal products
+- skincare
+- makeup
+- haircare
+- fragrance
+- beauty routines
+- personalized beauty recommendations
 
-  // When using Cloudflare, you'll need to POST a `messages` array in the body,
-  // and handle the response using: data.choices[0].message.content
+If the user asks about something unrelated to beauty or L'Oréal,
+politely explain that you can only help with L'Oréal products and
+beauty-related topics.
 
-  // Show message
-  chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
+Keep responses friendly, clear, and concise.
+Do not claim to diagnose medical conditions.
+`;
+
+/* Stores the system instructions and conversation history */
+const messages = [
+  {
+    role: "system",
+    content: systemPrompt,
+  },
+];
+
+/* Initial chatbot greeting */
+chatWindow.textContent =
+  "👋 Hello! How can I help with your beauty routine today?";
+
+/* Handle form submission */
+chatForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  /* Get what the user typed */
+  const userMessage = userInput.value.trim();
+
+  /* Do not allow empty messages */
+  if (userMessage === "") {
+    return;
+  }
+
+  /* Save the user's message in the conversation history */
+  messages.push({
+    role: "user",
+    content: userMessage,
+  });
+
+  /* Temporarily display the latest question */
+  chatWindow.textContent = `You asked:\n\n${userMessage}`;
+
+  /* Clear the input box */
+  userInput.value = "";
+
+  /* Put the cursor back inside the input */
+  userInput.focus();
 });
