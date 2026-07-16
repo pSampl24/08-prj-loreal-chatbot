@@ -31,14 +31,14 @@ const messages = [
     content: systemPrompt,
   },
 ];
-
+// Cloudflare Worker URL
+const WORKER_URL = "PASTE_YOUR_WORKER_URL_HERE";
 /* Initial chatbot greeting */
 chatWindow.textContent =
   "👋 Hello! How can I help with your beauty routine today?";
 
 /* Handle form submission */
-chatForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+chatForm.addEventListener("submit", async (e) => {
 
   /* Get what the user typed */
   const userMessage = userInput.value.trim();
