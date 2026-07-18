@@ -39,6 +39,7 @@ chatWindow.textContent =
 
 /* Handle form submission */
 chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   /* Get what the user typed */
   const userMessage = userInput.value.trim();
@@ -54,8 +55,32 @@ chatForm.addEventListener("submit", async (e) => {
     content: userMessage,
   });
 
-  /* Temporarily display the latest question */
-  chatWindow.textContent = `You asked:\n\n${userMessage}`;
+  /* Show a loading message while waiting for AI */
+  chatWindow.textContent = "Thinking...";
+
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4.1-mini",
+      messages: messages,
+    }),
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+
+  if (!response.ok) {
+    chatWindow.textContent =
+      data.error?.message || "Something went wrong while contacting OpenAI.";
+    return;
+  }
+
+  const aiMessage = data.choices[0].message.content;
 
   /* Clear the input box */
   userInput.value = "";
