@@ -32,7 +32,8 @@ const messages = [
   },
 ];
 // Cloudflare Worker URL
-const WORKER_URL = "PASTE_YOUR_WORKER_URL_HERE";
+const WORKER_URL =
+  "https://loreal-chatbot-api.precioussampl.workers.dev";
 /* Initial chatbot greeting */
 chatWindow.textContent =
   "👋 Hello! How can I help with your beauty routine today?";
@@ -58,17 +59,15 @@ chatForm.addEventListener("submit", async (e) => {
   /* Show a loading message while waiting for AI */
   chatWindow.textContent = "Thinking...";
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-4.1-mini",
-      messages: messages,
-    }),
-  });
+  const response = await fetch(WORKER_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    messages: messages,
+  }),
+});
 
   const data = await response.json();
 
@@ -80,8 +79,12 @@ chatForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  const aiMessage = data.choices[0].message.content;
+messages.push({
+  role: "assistant",
+  content: aiMessage,
+});
 
+chatWindow.textContent = aiMessage;
   /* Clear the input box */
   userInput.value = "";
 
